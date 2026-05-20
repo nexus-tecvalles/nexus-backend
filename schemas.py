@@ -55,6 +55,10 @@ class ProjectBase(BaseModel):
 class ProjectCreate(ProjectBase):
     pass
 
+class ProjectUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+
 class Project(ProjectBase):
     id: int
     created_at: datetime.datetime

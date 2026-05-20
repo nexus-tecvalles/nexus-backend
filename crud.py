@@ -22,6 +22,16 @@ def delete_project(db: Session, project_id: int):
         db.commit()
     return db_project
 
+def update_project(db: Session, project_id: int, project_update: schemas.ProjectUpdate):
+    db_project = get_project(db, project_id)
+    if db_project:
+        update_data = project_update.dict(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(db_project, key, value)
+        db.commit()
+        db.refresh(db_project)
+    return db_project
+
 # Activity
 def get_activity(db: Session, activity_id: int):
     return db.query(models.Activity).filter(models.Activity.id == activity_id).first()
